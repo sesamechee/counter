@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-hk">
+
+<head>
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+	<title>COUNTER</title>
+
+
+	<style>
+		/* Digit Text */
+		.userNumBar{
+			position: relative;
+			color: #666;
+			text-align: center;
+		}
+		.userNumBar .pplNum{
+			display: inline-block;
+			vertical-align: bottom;
+			font-size: 30px;
+			line-height: 40px;
+		}
+		.userNumBar .pplNum .digit-con,
+		.userNumBar .pplNum .comma{
+			height: 40px;
+			overflow: hidden;
+			display: inline-block;
+			vertical-align: bottom;
+		}
+		.userNumBar .pplNum .digit-con span{
+			position: relative;
+		}
+		
+		
+		/* Digit Img */
+		.userImgNumBar{
+			position: relative;
+			color: #666;
+			text-align: center;
+		}
+		.userImgNumBar .pplNum{
+			display: inline-block;
+			vertical-align: bottom;
+		}
+		.userImgNumBar .pplNum .digit-con,
+		.userImgNumBar .pplNum .comma{
+			height: 80px;
+			overflow: hidden;
+			display: inline-block;
+			vertical-align: bottom;
+		}
+		.userImgNumBar .pplNum .comma{
+			content: '';
+			width: 10px;
+			height: 20px;
+			background-image: url(imgDigitComma.png);
+			background-repeat: no-repeat;
+		}
+		.userImgNumBar .pplNum .digit-con span{
+			content: '';
+			position: relative;
+			display: block;
+			width: 50px;
+			height: 1600px;
+			background-image: url(imgDigit.png);
+			background-repeat: repeat-y;
+		}
+	</style>
+
+</head>
+
+<body>
+	
+	<div class="userNumBar"></div>
+	
+	<br>
+	<br>
+	<br>
+	
+	<div class="userImgNumBar"></div>
+
+	<script type="text/javascript">
+		var counterNum = 6548235;
+		
+		$(document).ready(function(){
+			counterControl( $('.userNumBar') , counterNum);
+			
+			counterControl( $('.userImgNumBar') , counterNum , {
+				isDigitBg : true,
+				comma: true
+			});
+		});
+		
+		function counterControl( target , number , config ){
+			var _target = target;
+			var number = number.toString();
+			var numArray = number.split("");
+			var isBg = false;
+			var defaults = {
+				speed: 3000,
+				isDigitBg: false,
+				comma: true
+			}
+			$.extend(defaults, config);
+			
+			_target.empty();
+			_target.html('<span class="pplNum"></span>');
+
+			for(var i=0; i<numArray.length; i++) { 
+				var html = '';
+				numArray[i] = parseInt(numArray[i], 10);
+				if( defaults.isDigitBg ){
+					html = '<span class="digit-con"><span class="digit'+i+'"></span></span>';
+				}else{
+					html = '<span class="digit-con"><span class="digit'+i+'">0<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>0<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br></span></span>';
+				}
+				_target.find('.pplNum').append(html);	
+			}
+			
+			if( defaults.comma ){
+				_target.find(".digit-con:nth-last-child(3n+4)").after("<span class='comma'>,</a>");
+			}
+
+			checkScroll();
+			
+			$(window).bind('scroll', function(){
+				checkScroll();
+			});
+
+			function checkScroll(){
+				if( _target.offset().top < $(window).scrollTop() + $(window).height() ){
+					for(var i=0; i<numArray.length; i++) {
+						var increment = _target.find('.digit-con').outerHeight();
+						_target.find('.digit'+i).delay(i*300).animate({top: -( (increment * numArray[i]) + (increment*10) )}, defaults.speed , 'linear');
+					}
+				}
+			}
+
+		}
+	</script>
+</body>
+</html>
