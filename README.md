@@ -6,3 +6,4 @@
     });
 ## Counter Number Image Demo
 ![github](https://raw.githubusercontent.com/sesamechee/counter/master/imgDigit.png "github")
+![github](https://raw.githubusercontent.com/sesamechee/counter/master/imgDigitComma.png "github")
