@@ -1,7 +1,6 @@
-# counter
-
-counterControl( $('.userImgNumBar') , counterNum , {
-	speed: 3000,
-	isDigitBg: false,
-	comma: true
-});
+# Counter Animation
+    counterControl( $('.userImgNumBar') , counterNum , {
+    	speed: 3000,
+    	isDigitBg: false,
+    	comma: true
+    });
